@@ -68,6 +68,9 @@ exit
 #   the session is still running. You can use `bjobs` to see it.
 bjobs
 
+# To have more details:
+bjobs -r -X -o "jobid queue cpu_used run_time avg_mem max_mem slots delimiter=','"
+
 # To terminate an interative session, you should kill the job using `bkill [jobID]` 
 #   or `bkill 0` to kill all jobs.
 bkill 0
@@ -105,6 +108,7 @@ system.time(
 
 
 # ~ Another example to illustrate parallel computing in HPC ####
+## Note you must have installed Rmpi to do this section. Please See the Rmpi section of the general guide: https://github.com/ncsuSEAL/tutorialHPC/blob/main/generalGuide.md
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # For a quick intro to parallel processing in R, 
 #   go to: https://nceas.github.io/oss-lessons/parallel-computing-in-r/parallel-computing-in-r.html

@@ -136,7 +136,7 @@ If we don't care what each task does (i.e., the output of a task isn't dependent
 Apparently, parallel code in R doesn't play nicely in HPC. Even if you specify `#BSUB -n 16` and do `parallel::detectCores()` when creating your cluster, your code can have other ideas. For example, if you are given a node with 16 cores, then the cluster you create will indeed have 16 cores. BUT, if other functions within your R code have behind-the-scenes parallelization, then extra threads will be spawned and you can overload the node (at worst, crash the node). 
 - It can be super difficult to tell if your code has any behind-the-scenes stuff because, well, that's the point of a function sometimes, is that you let it go and it does its thing. There is some HPC documentation on this [here](https://projects.ncsu.edu/hpc/Documents/paralleljobs.php) but if you're really having a hard time with this, we suggest emailing them directly oit_help@ncsu.edu.
   - Note that this is *not* a problem with Rmpi.
-- As described by Lisa:
+- As described by an HPC staff member:
 
 ```
 LSF's "BSUB -n 4" only *reserves* the hotel room for a family of 4.  It hopes you don't invite a frat party instead, but it really can't stop you.  And hotel staff don't really catch it and tell you to stop unless you break the fire code or the neighbors call the cops.

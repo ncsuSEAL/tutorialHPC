@@ -157,10 +157,12 @@ vi job_hello.csh
 
 # Again, type `i` to edit the file, then copy and paste the code below into the file.
 #   Make sure to change the conda path to yours!
+# PS: sometimes, use `-x` to run the job exclusively may avoid some werid errors, but use it with caution!
 # --------------------------------------------------------------------------------------
 #!/bin/tcsh
 #BSUB -n 64
 #BSUB -W 20
+#BSUB -x
 #BSUB -J hello
 #BSUB -oo out
 #BSUB -eo err
@@ -184,3 +186,119 @@ vi out
 
 # And, check the error file if the code didn't run correctly
 vi err
+
+
+
+# The output file will look like this:
+# --------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------
+# [[62099,1],0]: A high-performance Open MPI point-to-point messaging module
+# was unable to find any relevant network interfaces:
+
+# Module: OpenFabrics (openib)
+#   Host: n2k5-6
+
+# Another transport will be used instead, although this may result in
+# lower performance.
+# --------------------------------------------------------------------------
+# --------------------------------------------------------------------------
+# WARNING: a request was made to bind a process. While the system
+# supports binding the process itself, at least one node does NOT
+# support binding memory to the process location.
+
+#   Node:  n2k5-3
+
+# This usually is due to not having the required NUMA support installed
+# on the node. In some Linux distributions, the required support is
+# contained in the libnumactl and libnumactl-devel packages.
+# This is a warning only; your job will continue, though performance may be degraded.
+# --------------------------------------------------------------------------
+# --------------------------------------------------------------------------
+# WARNING: Open MPI will create a shared memory backing file in a
+# directory that appears to be mounted on a network filesystem.
+# Creating the shared memory backup file on a network file system, such
+# as NFS or Lustre is not recommended -- it may cause excessive network
+# traffic to your file servers and/or cause shared memory traffic in
+# Open MPI to be much slower than expected.
+
+# You may want to check what the typical temporary directory is on your
+# node.  Possible sources of the location of this temporary directory
+# include the $TEMPDIR, $TEMP, and $TMP environment variables.
+
+# Note, too, that system administrators can set a list of filesystems
+# where Open MPI is disallowed from creating temporary files by setting
+# the MCA parameter "orte_no_session_dir".
+
+#   Local host: n2k5-6
+#   Filename:   /share/jmgray2/xgao26/tmp/openmpi-sessions-xgao26@n2k5-6_0/62099/2/2/vader_segment.n2k5-6.2
+
+# You can set the MCA paramter shmem_mmap_enable_nfs_warning to 0 to
+# disable this message.
+# --------------------------------------------------------------------------
+#         63 slaves are spawned successfully. 0 failed.
+# Hello from loop iteration 1 running on rank 1 on node n2k5-6 which has 16 cores
+# Hello from loop iteration 2 running on rank 2 on node n2k5-6 which has 16 cores
+# Hello from loop iteration 3 running on rank 3 on node n2k5-6 which has 16 cores
+# Hello from loop iteration 4 running on rank 4 on node n2k5-6 which has 16 cores
+# Hello from loop iteration 5 running on rank 5 on node n2k5-6 which has 16 cores
+# ...
+# Hello from loop iteration 499 running on rank 58 on node n2k5-7 which has 16 cores
+# Hello from loop iteration 500 running on rank 59 on node n2k5-7 which has 16 cores
+# [1] 1
+# [1] "Detaching Rmpi. Rmpi cannot be used unless relaunching R."
+
+#                             <16*n2k5-3>
+#                             <16*n2k5-1>
+#                             <16*n2k5-7>
+# </home/xgao26> was used as the home directory.
+# </home/xgao26/hello> was used as the working directory.
+# Started at Tue Oct 19 12:09:59 2021
+# Terminated at Tue Oct 19 12:10:27 2021
+# Results reported at Tue Oct 19 12:10:27 2021
+
+# Your job looked like:
+
+# ------------------------------------------------------------
+# # LSBATCH: User input
+# #!/bin/tcsh
+# #BSUB -n 64
+# #BSUB -W 20
+# #BSUB -J hello
+# #BSUB -q cnr
+# #BSUB -x
+# #BSUB -oo out.%J
+# #BSUB -eo err.%J
+
+# module load openmpi-gcc/openmpi1.8.4-gcc4.8.2
+# conda activate /usr/local/usrapps/jmgray2/jgao/my_env
+# mpirun -n 1 Rscript ./hello.R
+# conda deactivate
+
+# ------------------------------------------------------------
+
+# Successfully completed.
+
+# Resource usage summary:
+
+#     CPU time :                                   882.36 sec.
+#     Max Memory :                                 405.40 MB
+#     Average Memory :                             405.40 MB
+#     Total Requested Memory :                     -
+#     Delta Memory :                               -
+#     Max Swap :                                   -
+#     Max Processes :                              20
+#     Max Threads :                                28
+#     Run time :                                   36 sec.
+#     Turnaround time :                            30 sec.
+
+# The output (if any) is above this job summary.
+
+
+
+# PS:
+
+# Read file <err.192621> for stderr output of this job.
+# --------------------------------------------------------------------------------------
+
+
+

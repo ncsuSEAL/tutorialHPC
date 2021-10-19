@@ -24,25 +24,6 @@ HPC stands for high performance computing. It is a collection of CPUs that we ca
 What about the CNR queue? As students in the College of Natural Resources (CNR), we have exclusive access to this queue, which is helpful for 2 main reasons:
 - In general, there's less competition for resources, so your job is more likely to start right away.
 - We have a max run time of 10 days as opposed to 4 days in the general HPC cluster.
-- That being said, we can't see the cores per node on the CNR queue as easily as we can general HPC. Instead, we can use `bqcmem cnr` but **WARNING** please use this sparingly if at all and **DO NOT SHARE**. This is a command used by HPC staff and we are not supposed to know what it is.
-  - Instead, here is the output of that command as of Sep. 2021. Remember, the memory is per node, which is split over the number of associated cores.
-
-|cores|memory| N nodes|
-|---|---|---|
-|-  cores |1 GB  |  24 nodes
-|8  cores |16 GB |  114 nodes
-|8  cores |48 GB |  3 nodes
-|8  cores |24 GB |  220 nodes
-|12 cores |24 GB | 7 nodes
-|12 cores |48 GB | 133 nodes
-|12 cores |36 GB | 27 nodes
-|16 cores |128 GB|  8 nodes
-|16 cores |72 GB | 54 nodes
-|16 cores |56 GB | 1 nodes
-|16 cores |64 GB | 71 nodes
-|20 cores |128 GB| 40 nodes
-|20 cores |512 GB| 1 nodes
-|20 cores |256 GB| 1 nodes
 
 ### So wait, I just try to find the highest memory nodes to get the fastest output right?
 Yeah you'd think that right? Unfortunately the different CPUs housing the nodes are varied - some are older (slower) and some are newer (faster). Exactly which ones are older/newer is information that is not fully shared, otherwise users would only ever request those CPUs. So for example, while we have access to the CNR queue, which is great, we've been told that (as of Aug 2021) a number of CPUs there are actually older than the ones in the general HPC cluster. So...it's a bargain. Thankfully the performance isn't drastically different, but there can be one.

@@ -16,7 +16,7 @@ Environments can be thought of as different rooms that you run code in. Let's pr
 Setting up conda for the first time takes a little bit, but once it's set then it's easy.
 
 Steps
-1. Log in to HPC. If you haven't done this before, see [the general HPC guide](https://github.com/ncsuSEAL/sealHPChelp/blob/main/generalGuide.md).
+1. Log in to HPC. If you haven't done this before, see [the general HPC guide](https://github.com/ncsuSEAL/tutorialHPC/blob/main/generalGuide.md).
 - `ssh -Y <unityID>@login.hpc.ncsu.edu`
 
 2. Now load conda, then create a tcsh file. 

@@ -50,6 +50,33 @@ To change this, there are two ways on Mac, and both of these (as well as the con
 3. To change the permission to give read-write access to everyone for a file or folder, enter `chmod 777 yourFileName.csv`, or `chmod -R 777 /Path/To/Your/Folder` (the -R stands for recursive, meaning it will apply the read-write access to all files and subdirectories within the specified directory)
 4. You can make sure this worked by typing `ls -l` again.
 
+### Moving files between local computer and HPC
+The easiest way to do this is using `sftp` from [this website](https://projects.ncsu.edu/hpc/Documents/CopyFiles.php). Note that you can add all contents from a folder. Here's an example:
+
+```r
+# To initiate an SFTP session, type the following, where user_name is the Unity ID. There will be a prompt for a password and Duo authentication.
+sftp user_name@login.hpc.ncsu.edu
+
+# An SFTP prompt will be opened:
+sftp>
+
+# Navigate to the share directory:
+sftp> cd /share/group_name/user_name
+
+## Local to Henry2
+sftp> put filename
+
+## Local to Henry2 *ALL FOLDER CONTENTS*
+### if my folder is labeled "zillow-prize-1", then the code looks like this:
+sftp > put -R /Users/imcgreg/Downloads/zillow-prize-1/.
+
+## Henry2 to local
+sftp> get filename
+
+## To exit the SFTP session:
+sftp> quit
+```
+
 ## Basic commands
 These are just a small sample of basic commands, but for other linux (terminal) commands to use in HPC such as moving a file to another location, creating a directory, etc, please see these websites ([here](https://www.educative.io/blog/bash-shell-command-cheat-sheet) and [here](https://dev.to/awwsmm/101-bash-commands-and-tips-for-beginners-to-experts-30je)).
 

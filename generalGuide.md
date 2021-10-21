@@ -68,7 +68,7 @@ sftp> put filename
 
 ## Local to Henry2 *ALL FOLDER CONTENTS*
 ### if my folder is labeled "zillow-prize-1", then the code looks like this:
-sftp > put -R /Users/imcgreg/Downloads/zillow-prize-1/.
+sftp > put -R full/Path/To/Folder/zillow-prize-1/.
 
 ## Henry2 to local
 sftp> get filename

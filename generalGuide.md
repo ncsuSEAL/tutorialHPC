@@ -224,7 +224,7 @@ A csh file based on example above. NOTE: try to always specify your memory in MB
 ### Submitting a Job
 To run the job in HPC, cd to the folder containing your .csh and .R files, and enter `bsub < yourfilename.csh` in terminal.
 
-This automatically sends the job to HPC and creates a file called “<somename>.Rout” in your directory, which will show you the code’s progress as it is being run by HPC. This is also where you can find out if it’s running into an error at all.
+This automatically sends the job to HPC and creates a file called `<somename>.Rout` in your directory, which will show you the code’s progress as it is being run by HPC. This is also where you can find out if it’s running into an error at all.
 - Tip: Open this file in visual studio code - it will automatically update itself when you return to that tab.
 
 ### After submitting a job 
@@ -235,6 +235,48 @@ This automatically sends the job to HPC and creates a file called “<somename>.
 - To kill all jobs: `bkill 0`
 - Change job running time: `bmod -W "[new_time_in_minutes]" [job_ID]`
   - Maximum running time limit depends on the queue used, A standard "serial" queue has limit running time of 4 days. 
+  
+### Automating the submission of multiple jobs
+Sometimes we need to submit multiple jobs at once. There are 3 main options, but let's go over an example to understand use-case. Let's say I have a function in R (call it "longFun", takes 1 argument which is the iteration number) that randomly chooses 90% of my data and performs an analysis. I need to run this 100 times on HPC for cross-validation, so in other words, I need to submit 100 jobs, each of which runs the same function.
+- \*Note that in this example, R is being called from a conda environment.
+
+1. Technically, HPC has some good documentation on this, which can be found [here](https://projects.ncsu.edu/hpc/Documents/lsf_scripts.php). However, it has been mentioned that this version of submitting multiple jobs (e.g. the "Rscript for multiple job submissions" section) is **not the preferred method**.
+
+Here is an example csh for Method 1. Notice how all of my normal `#BSUB` arguments are in one line
+```sh
+#!/bin/csh
+#
+# Script:  This is a reformat of HPC's "R_loops.csh"
+#
+# 
+## To run this (and submit 100 identical jobs), type the following in terminal after cd folder in HPC
+#     ./runThisFile.csh 100
+#  Note that script must have execute permissions, i.e.,
+#     chmod u+x R_loops.csh
+
+conda activate /usr/local/usrapps/jmgray2/imcgreg/env_dissPareto3
+ 
+# Specify number of jobs to submit
+set numIter = $1
+
+# Initialize iteration loop counter 
+set iter = 1
+
+while ($iter <= $numIter)
+    echo "Submitting job iter = $iter"
+
+    bsub -n 16 -W 360 -R "rusage[mem=22000]" -x -J fold_iter=$iter -oo out_iter=$iter -eo err_iter=$iter "Rscript ./longFun.R $iter"
+ 
+    @ iter++
+    
+end
+
+conda deactivate
+```
+
+2. Use `launch`. This is an automatic batch-job submitter which is installed to HPC. The instructions can be found [here](https://github.ncsu.edu/lllowe/launch) (you need to log in with unity id) from Lisa Lowe. Also see [this google doc](https://docs.google.com/document/d/1qjtimdJh-9dR8GH7U1FDdpwYp_qR2ONARZmcFkKka4o/edit) for a walkthrough / further descriptions from Vaclav (Vashek).
+
+3. Use `pynodelauncher`. This is similar to `launch` but it is a python package. See the instructions [here](https://github.com/ncsu-landscape-dynamics/pynodelauncher) from Vaclav (Vashek) and Lisa Lowe. As of Nov 2021, this was not working when calling R scripts, so unsure what's going on. 
   
 ### HPC Support
 If you run into issues and want to send a specific question to an HPC specialist, email oit_hpc@help.ncsu.edu. Provide as much context as possible (script and .csh file code, screenshots of error messages and output, your job ID, etc). 

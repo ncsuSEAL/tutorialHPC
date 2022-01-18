@@ -96,7 +96,7 @@ There are two main ways to use R in HPC, either using HPC's version or in conda:
 - To run HPC's version: Loading R is simple, and involves doing `module load R` and `R`. Now you can treat your terminal as an R terminal and do any kind of R commands that you would normally run. Note that this is base R, which means you need to load / install certain packages manually (e.g. it doesn't have data.table already). This means for submitting a job using an R script, you MUST install your packages ahead of time.
   - to do so, use install.packages(). When it prompts you for permission to create a local directory for installing the additional libraries, accept the default library location. All subsequent packages installed will be added here automatically. 
   - When using multiple versions of R or multiple versions of libraries and packages, a user may create multiple libraries and specify the library locations when installing and when loading the libraries. Libraries installed under one version or compilation of R may not work with another version. To install to a library location different from the one defined in .Renviron, do install.packages("packagename",lib="../libs/R_libs_v2"). To load a library in a different location, do library("packagename",lib.loc="../libs/R_libs_v2"). If your library demands more storage than your home directory allows, visit [this resource](https://projects.ncsu.edu/hpc/Software/workflows/r.php). 
-- To run R with conda: please see [here](https://github.com/ncsuSEAL/sealHPChelp/blob/main/condaHPC.md).
+- To run R with conda: please see [here](condaHPC.md).
 
 Bear in mind that only the login node in HPC have internet access, so you should use login node to install any R packages. But, do not run heavy computing scripts on the login node. 
 
@@ -170,7 +170,7 @@ LSF's "BSUB -n 4" only *reserves* the hotel room for a family of 4.  It hopes yo
 ```
 
 ### Using Rmpi (parallel, distributed memory).
-If we want the output of one node to affect the output of another, then we need to do something different via Rmpi. Installing it is easy and can be done with Steps 1-3 from https://projects.ncsu.edu/hpc/Software/Apps.php?app=Conda-MPI, which is also spelled out below. Note that this requires a conda environment (see the [condaHPC resource](https://github.com/ncsuSEAL/sealHPChelp/blob/main/condaHPC.md)).
+If we want the output of one node to affect the output of another, then we need to do something different via Rmpi. Installing it is easy and can be done with Steps 1-3 from https://projects.ncsu.edu/hpc/Software/Apps.php?app=Conda-MPI, which is also spelled out below. Note that this requires a conda environment (see the [condaHPC resource](condaHPC.md)).
 - `conda activate /usr/local/usrapps/jmgray2/<unityID>/<yourEnvironmentName>`
 - `module load openmpi-gcc/openmpi1.8.4-gcc4.8.2`    #This version of MPI is necessary for a successful compile
 - `setenv RMPI_INCLUDE /usr/local/apps/openmpi/1.8.4-gcc4.8.2/include`

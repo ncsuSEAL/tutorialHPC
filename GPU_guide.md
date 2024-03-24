@@ -14,7 +14,7 @@ Not all GPUs are created equal. Here's a short summary of the different types of
 | TeslaP100_PCIE_ 	| gpu03, gpu04 	| 157910-172230 	|  	|
 | NVIDIAA30 	| gpu07, gpu08 	| 25006-26466 	| errors, as of 03/24/24 	|
 | NVIDIAA10 	| gpu09, gpu10, gpu11, gpu12 	| 15579-101170 	|  	|
-| NVIDIAA100_SXM4 	| gpu13 	| 316933-360309 	|  	|
+| NVIDIAA100_SXM4 	| gpu13 	| 316933-360309 	|  most powerful accelerator of the NVIDIA Ampere generation. Use for large neural nets, etc.	|
 | NVIDIAL40 	| gpu14, gpu15 	| 110831-125593 	|  	|
 | NVIDIAH100PCIe 	| gpu17 	| 42472-344047 	|  	|
 | NVIDIAA30 	| gpu05, gpu06 	| 25216-27852 	| errors, as of 03/24/24 	|
